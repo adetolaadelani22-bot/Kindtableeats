@@ -15,7 +15,6 @@ import {
   HeartHandshake
 } from "lucide-react";
 import { UserRole } from "../../types";
-import { supabase } from "../../lib/supabase";
 
 export const AuthPage: React.FC = () => {
   const { 
@@ -26,7 +25,7 @@ export const AuthPage: React.FC = () => {
     submitCookApplication
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState<"customer-login" | "customer-register" | "cook-login" | "cook-register" | "admin-login">("customer-login");
+  const [activeTab, setActiveTab] = useState<"customer-login" | "customer-register" | "cook-login" | "cook-register">("customer-login");
 
   // Customer Login State
   const [customerEmail, setCustomerEmail] = useState("hannah.wright@example.com");
@@ -42,9 +41,6 @@ export const AuthPage: React.FC = () => {
   // Cook Login State
   const [cookEmail, setCookEmail] = useState("amara.okafor@kindtableeats.org");
   const [cookPassword, setCookPassword] = useState("••••••••");
-  const [adminEmail, setAdminEmail] = useState("");
-  const [adminPassword, setAdminPassword] = useState("");
-  const [adminError, setAdminError] = useState("");
 
   const handleCustomerLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,31 +75,6 @@ export const AuthPage: React.FC = () => {
     setCurrentRoute("seller-dashboard");
   };
 
-  const handleAdminLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAdminError("");
-
-    if (!supabase) {
-      setAdminError("Admin authentication is not configured yet.");
-      return;
-    }
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: adminEmail,
-      password: adminPassword,
-    });
-    const configuredAdminEmail = import.meta.env.VITE_ADMIN_EMAIL?.trim().toLowerCase();
-
-    if (error || !data.user || data.user.email?.toLowerCase() !== configuredAdminEmail) {
-      await supabase.auth.signOut();
-      setAdminError("Those credentials do not have administrator access.");
-      return;
-    }
-
-    setUserRole("admin");
-    addToast({ title: "Administrator authenticated", message: "Opening the private operations console.", type: "success" });
-    setCurrentRoute("admin-dashboard");
-  };
 
   const handleQuickRole = (role: UserRole) => {
     setUserRole(role);
@@ -180,15 +151,10 @@ export const AuthPage: React.FC = () => {
             <span>Cook Portal Sign In</span>
           </button>
 
-          <button
-            onClick={() => setActiveTab("admin-login")}
-            className={`flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
-              activeTab === "admin-login" ? "bg-[#193329] text-white shadow-sm" : "text-[#6D716C] hover:text-[#202522]"
-            }`}
-          >
+          <a href="https://adetolaadelani22-bot.github.io/Kindtableeats-admin/" className="flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-[#193329] text-white hover:bg-[#24483A] transition-all">
             <ShieldCheck className="w-4 h-4" />
             <span>Admin Portal</span>
-          </button>
+          </a>
 
           <button
             onClick={() => setCurrentRoute("become-a-cook")}
@@ -205,24 +171,6 @@ export const AuthPage: React.FC = () => {
           {/* Main Form Box (7 cols) */}
           <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl border border-[#EDE5D8] shadow-sm space-y-6">
 
-            {activeTab === "admin-login" && (
-              <form onSubmit={handleAdminLogin} className="space-y-5">
-                <div>
-                  <h3 className="font-serif text-2xl font-bold text-[#202522]">Private Admin Portal</h3>
-                  <p className="text-xs text-[#6D716C] mt-1">Authorized operations staff only.</p>
-                </div>
-                <div className="space-y-4">
-                  <input type="email" required value={adminEmail} onChange={(e) => setAdminEmail(e.target.value)} placeholder="Admin email address" className="w-full text-xs px-3 py-3 bg-[#F8F5EF] border border-[#EDE5D8] rounded-xl focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#24483A]" />
-                  <input type="password" required value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} placeholder="Password" className="w-full text-xs px-3 py-3 bg-[#F8F5EF] border border-[#EDE5D8] rounded-xl focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#24483A]" />
-                </div>
-                {adminError && <p role="alert" className="text-xs font-semibold text-[#B86B4B]">{adminError}</p>}
-                <button type="submit" className="w-full bg-[#193329] hover:bg-[#24483A] text-white py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all shadow-xs flex items-center justify-center gap-2">
-                  <span>Enter Admin Console</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </form>
-            )}
-            
             {/* 1. CUSTOMER SIGN IN */}
             {activeTab === "customer-login" && (
               <form onSubmit={handleCustomerLogin} className="space-y-5">

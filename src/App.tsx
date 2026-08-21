@@ -19,49 +19,10 @@ const CheckoutPage = lazy(() => import("./components/checkout/CheckoutPage").the
 const OrderTrackingPage = lazy(() => import("./components/tracking/OrderTrackingPage").then((module) => ({ default: module.OrderTrackingPage })));
 const CustomerDashboard = lazy(() => import("./components/dashboard/CustomerDashboard").then((module) => ({ default: module.CustomerDashboard })));
 const SellerDashboard = lazy(() => import("./components/dashboard/SellerDashboard").then((module) => ({ default: module.SellerDashboard })));
-const AdminDashboard = lazy(() => import("./components/dashboard/AdminDashboard").then((module) => ({ default: module.AdminDashboard })));
 const AuthPage = lazy(() => import("./components/auth/AuthPage").then((module) => ({ default: module.AuthPage })));
-
-const AdminAppShell: React.FC = () => {
-  const { setCurrentRoute, setUserRole } = useApp();
-
-  return (
-    <div className="min-h-screen bg-[#F1F3F0] text-[#202522]">
-      <header className="border-b border-[#2025221a] bg-[#193329] text-white">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#B86B4B] font-serif text-xl font-bold">K</div>
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#C8A96B]">KindTable Operations</p>
-              <p className="text-sm font-semibold">Admin Console</p>
-            </div>
-          </div>
-          <button
-            onClick={() => {
-              setUserRole("customer");
-              setCurrentRoute("home");
-            }}
-            className="rounded-lg border border-white/25 px-3 py-2 text-xs font-semibold hover:bg-white/10"
-          >
-            Return to public site
-          </button>
-        </div>
-      </header>
-      <main>
-        <Suspense fallback={<div className="flex min-h-[50vh] items-center justify-center text-sm font-medium uppercase tracking-[0.2em] text-[#24483A]/70">Loading admin console...</div>}>
-          <AdminDashboard />
-        </Suspense>
-      </main>
-    </div>
-  );
-};
 
 const AppContent: React.FC = () => {
   const { currentRoute } = useApp();
-
-  if (currentRoute.startsWith("admin-")) {
-    return <AdminAppShell />;
-  }
 
   const renderCurrentView = () => {
     switch (currentRoute) {
@@ -95,13 +56,6 @@ const AppContent: React.FC = () => {
       case "seller-earnings":
       case "seller-verification":
         return <SellerDashboard />;
-      case "admin-dashboard":
-      case "admin-sellers":
-      case "admin-verifications":
-      case "admin-orders":
-      case "admin-food-safety":
-      case "admin-settings":
-        return <AdminDashboard />;
       case "login":
       case "register":
         return <AuthPage />;
