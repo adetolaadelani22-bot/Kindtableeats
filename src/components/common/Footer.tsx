@@ -137,11 +137,6 @@ export const Footer: React.FC = () => {
                   Support & Contact
                 </button>
               </li>
-              <li>
-                <button onClick={() => handleNav("admin-dashboard")} className="text-xs text-[#D9D0C1]/70 hover:text-white transition-colors">
-                  Admin Operations Portal
-                </button>
-              </li>
             </ul>
           </div>
 

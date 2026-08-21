@@ -257,20 +257,6 @@ export const Navbar: React.FC = () => {
                     <span>🍳 Cook Hub (Mama Amara)</span>
                     {userRole === "seller" && <span className="text-[10px] text-[#B86B4B]">Active</span>}
                   </button>
-                  <button
-                    onClick={() => {
-                      setUserRole("admin");
-                      setIsProfileDropdownOpen(false);
-                      setCurrentRoute("admin-dashboard");
-                    }}
-                    className={`w-full text-left px-4 py-1.5 text-xs flex items-center justify-between hover:bg-[#F8F5EF] ${
-                      userRole === "admin" ? "text-[#24483A] font-semibold" : "text-[#202522]"
-                    }`}
-                  >
-                    <span>🛡️ Platform Operations</span>
-                    {userRole === "admin" && <span className="text-[10px] text-[#B86B4B]">Active</span>}
-                  </button>
-
                   <div className="border-t border-[#EDE5D8] my-1" />
 
                   {/* Contextual links */}
@@ -316,23 +302,6 @@ export const Navbar: React.FC = () => {
                         className="w-full text-left px-4 py-2 text-xs text-[#202522] hover:bg-[#F8F5EF]"
                       >
                         Earnings & Fair Payouts
-                      </button>
-                    </>
-                  )}
-
-                  {userRole === "admin" && (
-                    <>
-                      <button
-                        onClick={() => handleNav("admin-dashboard")}
-                        className="w-full text-left px-4 py-2 text-xs text-[#202522] hover:bg-[#F8F5EF]"
-                      >
-                        Marketplace Operations
-                      </button>
-                      <button
-                        onClick={() => handleNav("admin-verifications")}
-                        className="w-full text-left px-4 py-2 text-xs text-[#202522] hover:bg-[#F8F5EF]"
-                      >
-                        Verify Cook Applications
                       </button>
                     </>
                   )}
@@ -493,19 +462,6 @@ export const Navbar: React.FC = () => {
                 }`}
               >
                 Cook Hub
-              </button>
-              <button
-                onClick={() => {
-                  setUserRole("admin");
-                  handleNav("admin-dashboard");
-                }}
-                className={`py-2 px-1 text-xs text-center rounded-lg border font-medium ${
-                  userRole === "admin"
-                    ? "bg-[#24483A] text-white border-[#24483A]"
-                    : "bg-white text-[#202522] border-[#EDE5D8]"
-                }`}
-              >
-                Admin Ops
               </button>
             </div>
           </div>
