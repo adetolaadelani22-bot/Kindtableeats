@@ -1,0 +1,6 @@
+{
+  "name": "KindTableEats",
+  "description": "Human-centered food marketplace connecting skilled single mothers cooking authentic home-cooked meals with local community customers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
