@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useApp } from "../../context/AppContext";
-import { X, ShieldCheck, ChefHat, User, Check, ArrowRight } from "lucide-react";
+import { X, ChefHat, User, Check, ArrowRight } from "lucide-react";
 import { UserRole } from "../../types";
 
 export const AuthModal: React.FC = () => {
@@ -28,13 +28,6 @@ export const AuthModal: React.FC = () => {
         title: "Welcome back, Amara!",
         message: "Logged into Mama Amara's Kitchen Hub",
         type: "success"
-      });
-    } else if (role === "admin") {
-      setCurrentRoute("admin-dashboard");
-      addToast({
-        title: "Administrator Authenticated",
-        message: "KindTableEats Platform Operations Console",
-        type: "info"
       });
     } else {
       setCurrentRoute("customer-dashboard");
@@ -119,18 +112,6 @@ export const AuthModal: React.FC = () => {
                   </span>
                 </button>
 
-                <button
-                  onClick={() => handleDemoLogin("admin")}
-                  className="w-full bg-white hover:bg-[#F8F5EF] text-[#202522] border border-[#EDE5D8] p-2.5 rounded-lg text-xs font-medium flex items-center justify-between transition-colors shadow-2xs"
-                >
-                  <span className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-[#C8A96B]" />
-                    <span>Admin Operations (Sarah Sterling)</span>
-                  </span>
-                  <span className="text-[10px] text-[#24483A] font-bold bg-[#C8A96B]/20 px-2 py-0.5 rounded">
-                    Log In
-                  </span>
-                </button>
               </div>
             </div>
 
