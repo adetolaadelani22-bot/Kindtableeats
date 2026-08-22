@@ -16,9 +16,10 @@ export default defineConfig(() => {
       target: 'esnext',
       rollupOptions: {
         output: {
-          manualChunks: {
-            react: ['react', 'react-dom'],
-            vendor: ['lucide-react', 'motion'],
+          manualChunks(id) {
+            if (id.includes('src/data/mockData')) return 'marketplace-data';
+            if (id.includes('node_modules/react')) return 'react';
+            if (id.includes('node_modules/lucide-react') || id.includes('node_modules/motion')) return 'vendor';
           },
         },
       },

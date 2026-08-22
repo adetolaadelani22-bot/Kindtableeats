@@ -4,9 +4,6 @@ import { Navbar } from "./components/common/Navbar";
 import { Footer } from "./components/common/Footer";
 import { RoleSwitcherBanner } from "./components/common/RoleSwitcherBanner";
 import { ToastContainer } from "./components/common/ToastContainer";
-import { CartDrawer } from "./components/cart/CartDrawer";
-import { MealDetailModal } from "./components/modal/MealDetailModal";
-import { AuthModal } from "./components/auth/AuthModal";
 
 const Home = lazy(() => import("./pages/Home").then((module) => ({ default: module.Home })));
 const DiscoverPage = lazy(() => import("./components/marketplace/DiscoverPage").then((module) => ({ default: module.DiscoverPage })));
@@ -21,6 +18,9 @@ const OrderTrackingPage = lazy(() => import("./components/tracking/OrderTracking
 const CustomerDashboard = lazy(() => import("./components/dashboard/CustomerDashboard").then((module) => ({ default: module.CustomerDashboard })));
 const SellerDashboard = lazy(() => import("./components/dashboard/SellerDashboard").then((module) => ({ default: module.SellerDashboard })));
 const AuthPage = lazy(() => import("./components/auth/AuthPage").then((module) => ({ default: module.AuthPage })));
+const CartDrawer = lazy(() => import("./components/cart/CartDrawer").then((module) => ({ default: module.CartDrawer })));
+const MealDetailModal = lazy(() => import("./components/modal/MealDetailModal").then((module) => ({ default: module.MealDetailModal })));
+const AuthModal = lazy(() => import("./components/auth/AuthModal").then((module) => ({ default: module.AuthModal })));
 
 const AppContent: React.FC = () => {
   const { currentRoute } = useApp();
@@ -87,9 +87,11 @@ const AppContent: React.FC = () => {
       <Footer />
 
       {/* Global Drawers & Modals */}
-      <CartDrawer />
-      <MealDetailModal />
-      <AuthModal />
+      <Suspense fallback={null}>
+        <CartDrawer />
+        <MealDetailModal />
+        <AuthModal />
+      </Suspense>
       <ToastContainer />
     </div>
   );
