@@ -29,10 +29,10 @@ export const HeroSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Bento Grid Architecture */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-px bg-[#2025221a] rounded-[16px] overflow-hidden border border-[#2025221a] shadow-xs">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 rounded-[16px]">
           
           {/* Main Editorial Hero Tile (7 cols) */}
-          <div className="lg:col-span-7 bg-[#F8F5EF] p-8 sm:p-12 lg:p-14 flex flex-col justify-center">
+          <div className="lg:col-span-7 rounded-[16px] border border-[#2025221a] bg-[#F8F5EF] p-8 sm:p-12 lg:p-14 flex flex-col justify-center">
             <span className="text-[#B86B4B] text-[12px] font-bold tracking-[0.2em] mb-4 uppercase">
               Good Food. Good People. Good Purpose.
             </span>
@@ -66,7 +66,7 @@ export const HeroSection: React.FC = () => {
           {/* Featured Kitchen Visual Bento Tile (5 cols) */}
           <div 
             onClick={() => navigateToKitchen(featuredCook.id)}
-            className="lg:col-span-5 bg-[#EDE5D8] relative min-h-[360px] lg:min-h-[440px] overflow-hidden group cursor-pointer"
+            className="lg:col-span-5 rounded-[16px] border border-[#2025221a] bg-[#EDE5D8] relative min-h-[360px] lg:min-h-[440px] overflow-hidden group cursor-pointer"
           >
             <div 
               className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-85 transition-transform duration-700 group-hover:scale-105"
@@ -99,7 +99,7 @@ export const HeroSection: React.FC = () => {
           {/* Trending Today Bento Tile (6 or 7 cols on tablet/desktop) */}
           <div 
             onClick={() => navigateToMeal(trendingMeal.id)}
-            className="lg:col-span-7 bg-[#F8F5EF] p-6 sm:p-8 flex flex-col justify-between cursor-pointer group hover:bg-[#F4EFE6] transition-colors"
+            className="lg:col-span-7 rounded-[16px] border border-[#2025221a] bg-[#F8F5EF] p-6 sm:p-8 flex flex-col justify-between cursor-pointer group hover:bg-[#F4EFE6] transition-colors"
           >
             <div className="flex justify-between items-start">
               <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#6D716C]">
@@ -130,7 +130,7 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* Verified Trust Bento Tile (5 cols) */}
-          <div className="lg:col-span-5 bg-[#24483A] p-6 sm:p-8 text-white flex flex-col justify-between">
+          <div className="lg:col-span-5 rounded-[16px] border border-[#193329] bg-[#24483A] p-6 sm:p-8 text-white flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#C8A96B]" />
