@@ -114,7 +114,7 @@ export const AuthPage: React.FC = () => {
         </div>
 
         {/* Tab Switcher */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-[#EDE5D8]/80 p-1.5 rounded-2xl border border-[#2025221a]">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-[#EDE5D8]/80 p-1.5 rounded-2xl border border-[#2025221a]">
           <button
             onClick={() => setActiveTab("customer-login")}
             className={`flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${

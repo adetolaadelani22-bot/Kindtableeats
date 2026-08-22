@@ -436,7 +436,7 @@ export const Navbar: React.FC = () => {
             <p className="text-xs font-semibold text-[#6D716C] uppercase tracking-wider mb-2">
               Workspace Role Mode
             </p>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={() => {
                   setUserRole("customer");
