@@ -20,6 +20,7 @@ export const AuthPage: React.FC = () => {
   const { 
     userRole, 
     setUserRole, 
+    setIsAuthenticated,
     setCurrentRoute, 
     addToast,
     submitCookApplication
@@ -45,6 +46,7 @@ export const AuthPage: React.FC = () => {
   const handleCustomerLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setUserRole("customer");
+    setIsAuthenticated(true);
     addToast({
       title: "Welcome back!",
       message: `Signed in as ${customerEmail.split("@")[0]}`,
@@ -56,6 +58,7 @@ export const AuthPage: React.FC = () => {
   const handleCustomerRegister = (e: React.FormEvent) => {
     e.preventDefault();
     setUserRole("customer");
+    setIsAuthenticated(true);
     addToast({
       title: "Account Created Successfully!",
       message: `Welcome to KindTableEats, ${regName || "Neighbor"}! Explore today's freshly made dishes.`,
