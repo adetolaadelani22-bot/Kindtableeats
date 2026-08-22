@@ -21,6 +21,7 @@ export const AuthPage: React.FC = () => {
     userRole, 
     setUserRole, 
     setIsAuthenticated,
+    setCustomerIdentity,
     setCurrentRoute, 
     addToast,
     submitCookApplication
@@ -47,6 +48,7 @@ export const AuthPage: React.FC = () => {
     e.preventDefault();
     setUserRole("customer");
     setIsAuthenticated(true);
+    setCustomerIdentity(customerEmail.split("@")[0].replace(/[._-]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()), customerEmail);
     addToast({
       title: "Welcome back!",
       message: `Signed in as ${customerEmail.split("@")[0]}`,
@@ -59,6 +61,7 @@ export const AuthPage: React.FC = () => {
     e.preventDefault();
     setUserRole("customer");
     setIsAuthenticated(true);
+    setCustomerIdentity(regName, regEmail);
     addToast({
       title: "Account Created Successfully!",
       message: `Welcome to KindTableEats, ${regName || "Neighbor"}! Explore today's freshly made dishes.`,

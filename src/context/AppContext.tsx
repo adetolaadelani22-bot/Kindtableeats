@@ -54,6 +54,7 @@ interface AppContextType {
   setUserRole: (role: UserRole) => void;
   isAuthenticated: boolean;
   setIsAuthenticated: (authenticated: boolean) => void;
+  setCustomerIdentity: (name: string, email: string) => void;
   isAuthModalOpen: boolean;
   setIsAuthModalOpen: (open: boolean) => void;
   authMode: "login" | "register";
@@ -150,6 +151,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Role State
   const [userRole, setUserRole] = useState<UserRole>("customer");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [customerIdentity, setCustomerIdentityState] = useState(() => {
+    try {
+      const saved = localStorage.getItem("kte_customer_identity");
+      return saved ? JSON.parse(saved) as { name: string; email: string } : { name: "Hannah Wright", email: "hannah.wright@example.com" };
+    } catch {
+      return { name: "Hannah Wright", email: "hannah.wright@example.com" };
+    }
+  });
+
+  const setCustomerIdentity = (name: string, email: string) => {
+    const identity = { name: name.trim() || email.split("@")[0], email: email.trim() };
+    setCustomerIdentityState(identity);
+    try {
+      localStorage.setItem("kte_customer_identity", JSON.stringify(identity));
+    } catch {
+      // ignore storage errors
+    }
+  };
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
 
@@ -254,8 +273,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Current Mock User based on Role
   const currentUser = {
     customer: {
-      name: "Hannah Wright",
-      email: "hannah.wright@example.com",
+      name: customerIdentity.name,
+      email: customerIdentity.email,
       avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
       role: "customer" as UserRole,
       favoriteCookIds: ["cook-amara", "cook-claudette"],
@@ -651,6 +670,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setUserRole,
         isAuthenticated,
         setIsAuthenticated,
+        setCustomerIdentity,
         isAuthModalOpen,
         setIsAuthModalOpen,
         authMode,
