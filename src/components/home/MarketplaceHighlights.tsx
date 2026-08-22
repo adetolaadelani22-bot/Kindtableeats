@@ -14,7 +14,11 @@ const FAQS = [
 export const MarketplaceHighlights: React.FC = () => {
   const { meals, cooks, reviews, formatPrice, navigateToMeal, setCurrentRoute } = useApp();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const freshMeals = meals.filter((meal) => !meal.isPaused && meal.portionsAvailable > 0).sort((a, b) => Number(b.isNew) - Number(a.isNew)).slice(0, 4);
+  const freshMeals = meals
+    .filter((meal) => !meal.isPaused && meal.portionsAvailable > 0)
+    .sort((a, b) => Number(b.isNew) - Number(a.isNew))
+    .filter((meal, index, availableMeals) => availableMeals.findIndex((candidate) => candidate.imageUrl === meal.imageUrl) === index)
+    .slice(0, 4);
   const trendingMeals = meals.filter((meal) => !meal.isPaused && (meal.isPopular || meal.isCommunityFavorite)).sort((a, b) => (b.reviewCount || 0) - (a.reviewCount || 0)).slice(0, 4);
   const featuredReviews = reviews.slice(0, 3);
 
