@@ -10,6 +10,7 @@ export const AuthModal: React.FC = () => {
     authMode, 
     setAuthMode, 
     setUserRole, 
+    setIsAuthenticated,
     setCurrentRoute,
     addToast 
   } = useApp();
@@ -21,6 +22,7 @@ export const AuthModal: React.FC = () => {
 
   const handleDemoLogin = (role: UserRole) => {
     setUserRole(role);
+    setIsAuthenticated(true);
     setIsAuthModalOpen(false);
     if (role === "seller") {
       setCurrentRoute("seller-dashboard");
@@ -42,6 +44,7 @@ export const AuthModal: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setUserRole("customer");
+    setIsAuthenticated(true);
     setIsAuthModalOpen(false);
     addToast({
       title: "Signed In Successfully",

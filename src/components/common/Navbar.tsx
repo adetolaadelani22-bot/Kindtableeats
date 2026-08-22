@@ -12,6 +12,7 @@ export const Navbar: React.FC = () => {
     setIsCartOpen, 
     userRole, 
     setUserRole, 
+    isAuthenticated,
     currentUser,
     setIsAuthModalOpen,
     setAuthMode,
@@ -29,6 +30,15 @@ export const Navbar: React.FC = () => {
     setCurrentRoute(route);
     setIsMobileMenuOpen(false);
     setIsProfileDropdownOpen(false);
+  };
+
+  const handleBasketClick = () => {
+    if (!isAuthenticated || userRole !== "customer") {
+      setAuthMode("login");
+      setIsAuthModalOpen(true);
+      return;
+    }
+    setIsCartOpen(true);
   };
 
   return (
@@ -311,7 +321,7 @@ export const Navbar: React.FC = () => {
 
             {/* Shopping Basket Button */}
             <button
-              onClick={() => setIsCartOpen(true)}
+              onClick={handleBasketClick}
               className="relative flex h-10 w-10 items-center justify-center rounded-[8px] bg-[#24483A] text-white shadow-xs transition-all hover:bg-[#193329] active:scale-98"
               aria-label="Open Basket"
               title="Open basket"
@@ -328,7 +338,7 @@ export const Navbar: React.FC = () => {
           {/* Mobile Right Controls */}
           <div className="flex md:hidden items-center space-x-2">
             <button
-              onClick={() => setIsCartOpen(true)}
+              onClick={handleBasketClick}
               className="relative p-2 text-[#24483A] hover:bg-[#EDE5D8] rounded-lg transition-colors"
               aria-label="Open Cart"
             >

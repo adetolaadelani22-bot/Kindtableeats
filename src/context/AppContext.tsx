@@ -52,6 +52,8 @@ interface AppContextType {
   // Role & Auth
   userRole: UserRole;
   setUserRole: (role: UserRole) => void;
+  isAuthenticated: boolean;
+  setIsAuthenticated: (authenticated: boolean) => void;
   isAuthModalOpen: boolean;
   setIsAuthModalOpen: (open: boolean) => void;
   authMode: "login" | "register";
@@ -147,6 +149,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Role State
   const [userRole, setUserRole] = useState<UserRole>("customer");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
 
@@ -646,6 +649,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         navigateToOrder,
         userRole,
         setUserRole,
+        isAuthenticated,
+        setIsAuthenticated,
         isAuthModalOpen,
         setIsAuthModalOpen,
         authMode,
