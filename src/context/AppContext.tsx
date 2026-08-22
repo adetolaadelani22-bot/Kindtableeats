@@ -61,6 +61,8 @@ interface AppContextType {
     email: string;
     avatar: string;
     role: UserRole;
+    favoriteCookIds: string[];
+    memberSince: string;
   };
 
   // Currency & Internationalization
@@ -219,7 +221,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       id: "pm-" + Math.random().toString(36).substr(2, 9)
     };
     if (newMethod.isDefault) {
-      setSavedPaymentMethods(prev => prev.map(m => ({ ...m, isDefault: false })).concat(newMethod));
+      setSavedPaymentMethods(prev => [...prev.map<SavedPaymentMethod>(m => ({ ...m, isDefault: false })), newMethod]);
     } else {
       setSavedPaymentMethods(prev => [newMethod, ...prev]);
     }
@@ -252,13 +254,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       name: "Hannah Wright",
       email: "hannah.wright@example.com",
       avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
-      role: "customer" as UserRole
+      role: "customer" as UserRole,
+      favoriteCookIds: ["cook-amara", "cook-claudette"],
+      memberSince: "March 2024"
     },
     seller: {
       name: "Amara Okafor",
       email: "amara.okafor@kindtableeats.org",
       avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
-      role: "seller" as UserRole
+      role: "seller" as UserRole,
+      favoriteCookIds: [],
+      memberSince: "March 2024"
     },
   }[userRole];
 

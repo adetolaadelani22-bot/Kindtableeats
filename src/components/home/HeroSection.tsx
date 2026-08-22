@@ -10,6 +10,7 @@ export const HeroSection: React.FC = () => {
     id: "cook-amara",
     name: "Elena",
     kitchenName: "Elena’s Coastal Kitchen",
+    heroImage: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1000&auto=format&fit=crop",
     quote: "Cooking is how I provide for my daughter and share my heritage with my neighbors.",
     location: "Peckham, SE15",
     rating: 4.98
