@@ -14,6 +14,7 @@ const KitchenProfilePage = lazy(() => import("./components/kitchen/KitchenProfil
 const KitchensDirectoryPage = lazy(() => import("./components/pages/KitchensDirectoryPage").then((module) => ({ default: module.KitchensDirectoryPage })));
 const StoriesPage = lazy(() => import("./components/pages/StoriesPage").then((module) => ({ default: module.StoriesPage })));
 const ImpactPage = lazy(() => import("./components/pages/ImpactPage").then((module) => ({ default: module.ImpactPage })));
+const ContactPage = lazy(() => import("./components/pages/ContactPage").then((module) => ({ default: module.ContactPage })));
 const BecomeACookPage = lazy(() => import("./components/cook-onboarding/BecomeACookPage").then((module) => ({ default: module.BecomeACookPage })));
 const CheckoutPage = lazy(() => import("./components/checkout/CheckoutPage").then((module) => ({ default: module.CheckoutPage })));
 const OrderTrackingPage = lazy(() => import("./components/tracking/OrderTrackingPage").then((module) => ({ default: module.OrderTrackingPage })));
@@ -41,6 +42,8 @@ const AppContent: React.FC = () => {
       case "impact":
       case "about":
         return <ImpactPage />;
+      case "contact":
+        return <ContactPage />;
       case "become-a-cook":
         return <BecomeACookPage />;
       case "checkout":

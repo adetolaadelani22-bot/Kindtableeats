@@ -7,6 +7,7 @@ import { FeaturedSection } from "../components/home/FeaturedSection";
 import { StoryFeature } from "../components/home/StoryFeature";
 import { CooksSpotlight } from "../components/home/CooksSpotlight";
 import { HowItWorksSection } from "../components/home/HowItWorksSection";
+import { MarketplaceHighlights } from "../components/home/MarketplaceHighlights";
 
 export const Home: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ export const Home: React.FC = () => {
       <TrustStrip />
       <WhySection />
       <CategoryGrid />
+      <MarketplaceHighlights />
       <FeaturedSection />
       <StoryFeature />
       <CooksSpotlight />

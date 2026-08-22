@@ -62,6 +62,13 @@ export const Navbar: React.FC = () => {
 
           {/* Desktop Center Navigation */}
           <nav className="hidden lg:flex items-center gap-7 text-[13px] uppercase tracking-wider font-semibold text-[#6D716C]" aria-label="Main Navigation">
+            <button
+              onClick={() => handleNav("home")}
+              className={`transition-colors py-1 relative ${currentRoute === "home" ? "text-[#24483A]" : "hover:text-[#24483A]"}`}
+            >
+              Home
+              {currentRoute === "home" && <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#24483A]" />}
+            </button>
             <button 
               onClick={() => handleNav("discover")} 
               className={`transition-colors py-1 relative ${
@@ -124,6 +131,14 @@ export const Navbar: React.FC = () => {
                 <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#24483A]" />
               )}
             </button>
+
+            <button
+              onClick={() => handleNav("about")}
+              className={`transition-colors py-1 relative ${currentRoute === "about" ? "text-[#24483A]" : "hover:text-[#24483A]"}`}
+            >
+              About
+              {currentRoute === "about" && <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#24483A]" />}
+            </button>
           </nav>
 
           {/* Desktop Right Actions */}
@@ -181,14 +196,6 @@ export const Navbar: React.FC = () => {
                 ))}
               </select>
             </div>
-
-            {/* Register as Cook CTA */}
-            <button
-              onClick={() => handleNav("become-a-cook")}
-              className="text-[12px] font-bold uppercase tracking-wider text-[#B86B4B] hover:text-[#9E5638] bg-[#B86B4B]/10 hover:bg-[#B86B4B]/20 px-3.5 py-2 rounded-lg transition-all"
-            >
-              Register as Cook
-            </button>
 
             {/* Sign In button */}
             <button
@@ -384,6 +391,12 @@ export const Navbar: React.FC = () => {
 
           <div className="space-y-1">
             <button
+              onClick={() => handleNav("home")}
+              className={`w-full text-left px-3 py-2.5 rounded-lg text-base font-medium ${currentRoute === "home" ? "bg-[#24483A] text-white font-semibold" : "text-[#202522] hover:bg-[#EDE5D8]"}`}
+            >
+              Home
+            </button>
+            <button
               onClick={() => handleNav("discover")}
               className={`w-full text-left px-3 py-2.5 rounded-lg text-base font-medium ${
                 currentRoute === "discover" ? "bg-[#24483A] text-white font-semibold" : "text-[#202522] hover:bg-[#EDE5D8]"
@@ -422,6 +435,12 @@ export const Navbar: React.FC = () => {
               }`}
             >
               About KindTableEats
+            </button>
+            <button
+              onClick={() => handleNav("contact")}
+              className={`w-full text-left px-3 py-2.5 rounded-lg text-base font-medium ${currentRoute === "contact" ? "bg-[#24483A] text-white font-semibold" : "text-[#202522] hover:bg-[#EDE5D8]"}`}
+            >
+              Contact & Support
             </button>
             <button
               onClick={() => handleNav("become-a-cook")}
