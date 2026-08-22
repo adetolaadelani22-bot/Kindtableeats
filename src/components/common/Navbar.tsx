@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useApp } from "../../context/AppContext";
-import { ShoppingBag, Search, Menu, X, ShieldCheck, ChevronDown, User, Heart, Bell, Globe2 } from "lucide-react";
+import { ShoppingBag, Search, Menu, X, ShieldCheck, ChevronDown, User, Heart, Bell, Globe2, ArrowRight } from "lucide-react";
 import { ViewRoute, UserRole, Currency } from "../../types";
 import { GLOBAL_CURRENCIES } from "../../data/mockData";
 
@@ -14,17 +14,21 @@ export const Navbar: React.FC = () => {
     setUserRole, 
     isAuthenticated,
     currentUser,
+    navigateToMeal,
     setIsAuthModalOpen,
     setAuthMode,
     searchQuery,
     setSearchQuery,
     currency,
-    setCurrency
+    setCurrency,
+    meals,
+    formatPrice
   } = useApp();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isOrderMenuOpen, setIsOrderMenuOpen] = useState(false);
 
   const handleNav = (route: ViewRoute) => {
     setCurrentRoute(route);
@@ -76,17 +80,37 @@ export const Navbar: React.FC = () => {
               Home
               {currentRoute === "home" && <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#24483A]" />}
             </button>
-            <button 
-              onClick={() => handleNav("discover")} 
-              className={`transition-colors py-1 relative ${
-                currentRoute === "discover" ? "text-[#24483A]" : "hover:text-[#24483A]"
-              }`}
-            >
-              Order Food
-              {currentRoute === "discover" && (
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#24483A]" />
+            <div className="relative">
+              <button
+                onClick={() => setIsOrderMenuOpen((open) => !open)}
+                aria-expanded={isOrderMenuOpen}
+                className={`transition-colors py-1 relative ${currentRoute === "discover" ? "text-[#24483A]" : "hover:text-[#24483A]"}`}
+              >
+                Order Food
+                {(currentRoute === "discover" || isOrderMenuOpen) && <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#24483A]" />}
+              </button>
+              {isOrderMenuOpen && (
+                <div className="absolute left-1/2 top-full z-50 mt-4 w-80 -translate-x-1/2 rounded-xl border border-[#EDE5D8] bg-[#F8F5EF] p-3 text-left shadow-xl">
+                  <div className="flex items-center justify-between border-b border-[#EDE5D8] px-2 pb-2">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#B86B4B]">Fresh Today</p>
+                      <p className="text-sm font-semibold text-[#202522]">Choose a dish to order</p>
+                    </div>
+                    <button onClick={() => setIsOrderMenuOpen(false)} aria-label="Close order menu" className="rounded-md p-1 text-[#6D716C] hover:bg-[#EDE5D8]"><X className="h-4 w-4" /></button>
+                  </div>
+                  <div className="max-h-72 space-y-1 overflow-y-auto py-2">
+                    {meals.filter((meal) => !meal.isPaused && meal.portionsAvailable > 0).slice(0, 6).map((meal) => (
+                      <button key={meal.id} onClick={() => { setIsOrderMenuOpen(false); navigateToMeal(meal.id); }} className="flex w-full items-center gap-3 rounded-lg p-2 text-left hover:bg-white">
+                        <img src={meal.imageUrl} alt="" className="h-11 w-11 shrink-0 rounded-md object-cover" />
+                        <span className="min-w-0 flex-1"><span className="block truncate text-xs font-semibold text-[#202522]">{meal.name}</span><span className="mt-1 block text-[11px] text-[#6D716C]">{meal.preparationTime} • {meal.portionsAvailable} portions</span></span>
+                        <span className="text-xs font-bold text-[#B86B4B]">{formatPrice(meal.price)}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <button onClick={() => { setIsOrderMenuOpen(false); handleNav("discover"); }} className="flex w-full items-center justify-center gap-2 border-t border-[#EDE5D8] pt-3 text-[11px] font-bold uppercase tracking-wider text-[#24483A] hover:text-[#B86B4B]">View full menu <ArrowRight className="h-3.5 w-3.5" /></button>
+                </div>
               )}
-            </button>
+            </div>
 
             <button 
               onClick={() => handleNav("kitchens")} 
@@ -389,13 +413,26 @@ export const Navbar: React.FC = () => {
               Home
             </button>
             <button
-              onClick={() => handleNav("discover")}
+              onClick={() => setIsOrderMenuOpen((open) => !open)}
+              aria-expanded={isOrderMenuOpen}
               className={`w-full text-left px-3 py-2.5 rounded-lg text-base font-medium ${
-                currentRoute === "discover" ? "bg-[#24483A] text-white font-semibold" : "text-[#202522] hover:bg-[#EDE5D8]"
+                currentRoute === "discover" || isOrderMenuOpen ? "bg-[#24483A] text-white font-semibold" : "text-[#202522] hover:bg-[#EDE5D8]"
               }`}
             >
-              Discover Meals
+              Order Food
             </button>
+            {isOrderMenuOpen && (
+              <div className="ml-3 max-h-64 space-y-1 overflow-y-auto rounded-lg border border-[#EDE5D8] bg-white p-2">
+                {meals.filter((meal) => !meal.isPaused && meal.portionsAvailable > 0).slice(0, 6).map((meal) => (
+                  <button key={meal.id} onClick={() => { setIsOrderMenuOpen(false); setIsMobileMenuOpen(false); navigateToMeal(meal.id); }} className="flex w-full items-center gap-2 rounded-md p-2 text-left hover:bg-[#F8F5EF]">
+                    <img src={meal.imageUrl} alt="" className="h-10 w-10 shrink-0 rounded-md object-cover" />
+                    <span className="min-w-0 flex-1"><span className="block truncate text-xs font-semibold text-[#202522]">{meal.name}</span><span className="block text-[10px] text-[#6D716C]">{meal.preparationTime}</span></span>
+                    <span className="text-xs font-bold text-[#B86B4B]">{formatPrice(meal.price)}</span>
+                  </button>
+                ))}
+                <button onClick={() => { setIsOrderMenuOpen(false); handleNav("discover"); }} className="w-full border-t border-[#EDE5D8] pt-2 text-center text-[11px] font-bold uppercase tracking-wider text-[#24483A]">View full menu</button>
+              </div>
+            )}
             <button
               onClick={() => handleNav("kitchens")}
               className={`w-full text-left px-3 py-2.5 rounded-lg text-base font-medium ${

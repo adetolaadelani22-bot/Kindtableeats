@@ -281,7 +281,7 @@ export const MealDetailModal: React.FC = () => {
             {/* Story & Description */}
             <div className="space-y-3">
               <h3 className="font-serif text-xl font-bold text-[#202522]">
-                About This Home-Cooked Dish
+                How This Dish Is Made
               </h3>
               <p className="text-sm text-[#202522] leading-relaxed">
                 {meal.longDescription || meal.description}
@@ -349,7 +349,7 @@ export const MealDetailModal: React.FC = () => {
               {/* Ingredients */}
               <div>
                 <h4 className="font-serif text-sm font-bold text-[#202522] mb-3 uppercase tracking-wider text-[11px] text-[#6D716C]">
-                  Fresh Ingredients
+                  Ingredients Used
                 </h4>
                 <div className="flex flex-wrap gap-1.5">
                   {meal.ingredients.map((ing) => (
