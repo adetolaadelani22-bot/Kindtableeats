@@ -20,6 +20,7 @@ export const AuthPage: React.FC = () => {
   const { 
     userRole, 
     setUserRole, 
+    setPortalMode,
     setIsAuthenticated,
     setCustomerIdentity,
     setCurrentRoute, 
@@ -46,6 +47,7 @@ export const AuthPage: React.FC = () => {
 
   const handleCustomerLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setPortalMode("customer");
     setUserRole("customer");
     setIsAuthenticated(true);
     setCustomerIdentity(customerEmail.split("@")[0].replace(/[._-]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()), customerEmail);
@@ -59,6 +61,7 @@ export const AuthPage: React.FC = () => {
 
   const handleCustomerRegister = (e: React.FormEvent) => {
     e.preventDefault();
+    setPortalMode("customer");
     setUserRole("customer");
     setIsAuthenticated(true);
     setCustomerIdentity(regName, regEmail);
@@ -72,7 +75,9 @@ export const AuthPage: React.FC = () => {
 
   const handleCookLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setPortalMode("seller");
     setUserRole("seller");
+    setIsAuthenticated(true);
     addToast({
       title: "Kitchen Hub Access Granted",
       message: "Welcome to Mama Amara's Kitchen Dashboard",
@@ -83,8 +88,10 @@ export const AuthPage: React.FC = () => {
 
 
   const handleQuickRole = (role: UserRole) => {
+    setPortalMode(role === "seller" ? "seller" : "customer");
     setUserRole(role);
     if (role === "seller") {
+      setIsAuthenticated(true);
       addToast({
         title: "Switched to Cook Mode",
         message: "Logged into Mama Amara's Kitchen Hub",
@@ -92,6 +99,7 @@ export const AuthPage: React.FC = () => {
       });
       setCurrentRoute("seller-dashboard");
     } else {
+      setIsAuthenticated(true);
       addToast({
         title: "Customer Mode Activated",
         message: "Browsing and ordering home-cooked meals",

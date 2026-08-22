@@ -9,7 +9,8 @@ export const AuthModal: React.FC = () => {
     setIsAuthModalOpen, 
     authMode, 
     setAuthMode, 
-    setUserRole, 
+    setUserRole,
+    setPortalMode,
     setIsAuthenticated,
     setCustomerIdentity,
     setCurrentRoute,
@@ -22,6 +23,7 @@ export const AuthModal: React.FC = () => {
   if (!isAuthModalOpen) return null;
 
   const handleDemoLogin = (role: UserRole) => {
+    setPortalMode(role === "seller" ? "seller" : "customer");
     setUserRole(role);
     setIsAuthenticated(true);
     setIsAuthModalOpen(false);
@@ -44,6 +46,7 @@ export const AuthModal: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setPortalMode("customer");
     setUserRole("customer");
     setIsAuthenticated(true);
     setCustomerIdentity(email.split("@")[0].replace(/[._-]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()), email);

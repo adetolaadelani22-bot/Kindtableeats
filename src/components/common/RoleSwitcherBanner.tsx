@@ -4,7 +4,7 @@ import { UserRole, ViewRoute } from "../../types";
 import { Sparkles, User, ChefHat } from "lucide-react";
 
 export const RoleSwitcherBanner: React.FC = () => {
-  const { userRole, setUserRole, setCurrentRoute, currentRoute, orders, meals } = useApp();
+  const { userRole, setUserRole, setPortalMode, setCurrentRoute, currentRoute, orders, meals } = useApp();
   const [typedMeal, setTypedMeal] = useState("");
   const [mealIndex, setMealIndex] = useState(0);
 
@@ -57,6 +57,7 @@ export const RoleSwitcherBanner: React.FC = () => {
           <div className="flex items-center gap-1 bg-[#193329] p-1 rounded-lg">
             <button
               onClick={() => {
+                setPortalMode("customer");
                 setUserRole("customer");
                 if (currentRoute.startsWith("seller-")) {
                   setCurrentRoute("discover");
@@ -74,6 +75,7 @@ export const RoleSwitcherBanner: React.FC = () => {
 
             <button
               onClick={() => {
+                setPortalMode("seller");
                 setUserRole("seller");
                 setCurrentRoute("seller-dashboard");
               }}

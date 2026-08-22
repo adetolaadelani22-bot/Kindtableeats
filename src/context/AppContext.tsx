@@ -52,6 +52,8 @@ interface AppContextType {
   // Role & Auth
   userRole: UserRole;
   setUserRole: (role: UserRole) => void;
+  portalMode: "customer" | "seller";
+  setPortalMode: (portal: "customer" | "seller") => void;
   isAuthenticated: boolean;
   setIsAuthenticated: (authenticated: boolean) => void;
   setCustomerIdentity: (name: string, email: string) => void;
@@ -150,6 +152,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Role State
   const [userRole, setUserRole] = useState<UserRole>("customer");
+  const [portalMode, setPortalModeState] = useState<"customer" | "seller">("customer");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [customerIdentity, setCustomerIdentityState] = useState(() => {
     try {
@@ -168,6 +171,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     } catch {
       // ignore storage errors
     }
+  };
+
+  const setPortalMode = (nextPortal: "customer" | "seller") => {
+    setPortalModeState(nextPortal);
+    setUserRole(nextPortal === "seller" ? "seller" : "customer");
   };
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
@@ -668,6 +676,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         navigateToOrder,
         userRole,
         setUserRole,
+        portalMode,
+        setPortalMode,
         isAuthenticated,
         setIsAuthenticated,
         setCustomerIdentity,

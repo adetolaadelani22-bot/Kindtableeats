@@ -12,6 +12,7 @@ export const Navbar: React.FC = () => {
     setIsCartOpen, 
     userRole, 
     setUserRole, 
+    setPortalMode,
     isAuthenticated,
     setIsAuthenticated,
     currentUser,
@@ -48,6 +49,7 @@ export const Navbar: React.FC = () => {
 
   const handleCustomerLogout = () => {
     setIsAuthenticated(false);
+    setPortalMode("customer");
     setUserRole("customer");
     setIsCartOpen(false);
     setIsProfileDropdownOpen(false);
@@ -265,6 +267,7 @@ export const Navbar: React.FC = () => {
                   </div>
                   <button
                     onClick={() => {
+                      setPortalMode("customer");
                       setUserRole("customer");
                       setIsProfileDropdownOpen(false);
                       setCurrentRoute("customer-dashboard");
@@ -278,6 +281,7 @@ export const Navbar: React.FC = () => {
                   </button>
                   <button
                     onClick={() => {
+                      setPortalMode("seller");
                       setUserRole("seller");
                       setIsProfileDropdownOpen(false);
                       setCurrentRoute("seller-dashboard");
