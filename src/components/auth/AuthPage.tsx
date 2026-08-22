@@ -20,6 +20,7 @@ export const AuthPage: React.FC = () => {
   const { 
     userRole, 
     setUserRole, 
+    portalMode,
     setPortalMode,
     setIsAuthenticated,
     setCustomerIdentity,
@@ -29,6 +30,17 @@ export const AuthPage: React.FC = () => {
   } = useApp();
 
   const [activeTab, setActiveTab] = useState<"customer-login" | "customer-register" | "cook-login" | "cook-register">("customer-login");
+
+  const handlePortalSelect = (nextPortal: "customer" | "seller") => {
+    setPortalMode(nextPortal);
+    if (nextPortal === "seller") {
+      setUserRole("seller");
+      setCurrentRoute("seller-dashboard");
+    } else {
+      setUserRole("customer");
+      setCurrentRoute("discover");
+    }
+  };
 
   // Customer Login State
   const [customerEmail, setCustomerEmail] = useState("hannah.wright@example.com");
@@ -127,10 +139,57 @@ export const AuthPage: React.FC = () => {
           </p>
         </div>
 
+        <div className="grid gap-4 md:grid-cols-2">
+          <button
+            type="button"
+            onClick={() => handlePortalSelect("customer")}
+            className={`rounded-3xl border p-5 text-left transition-all shadow-sm ${
+              portalMode === "customer"
+                ? "border-[#24483A] bg-[#F1F8F3] shadow-md"
+                : "border-[#EDE5D8] bg-white hover:border-[#24483A]/60"
+            }`}
+          >
+            <div className="flex items-center gap-4">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#24483A] to-[#193329] text-2xl font-bold text-white shadow-md">
+                K
+              </div>
+              <div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#24483A]">Customer Portal</div>
+                <div className="font-serif text-2xl font-bold text-[#202522]">KindTableEats</div>
+              </div>
+            </div>
+            <p className="mt-3 text-sm text-[#6D716C]">Order home-cooked meals, save favorites, and track your deliveries.</p>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handlePortalSelect("seller")}
+            className={`rounded-3xl border p-5 text-left transition-all shadow-sm ${
+              portalMode === "seller"
+                ? "border-[#B86B4B] bg-[#FFF7F2] shadow-md"
+                : "border-[#EDE5D8] bg-white hover:border-[#B86B4B]/60"
+            }`}
+          >
+            <div className="flex items-center gap-4">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#B86B4B] to-[#8B4A2D] text-2xl font-bold text-white shadow-md">
+                S
+              </div>
+              <div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#B86B4B]">Seller Portal</div>
+                <div className="font-serif text-2xl font-bold text-[#202522]">Kitchen Hub</div>
+              </div>
+            </div>
+            <p className="mt-3 text-sm text-[#6D716C]">Manage menu items, orders, payments, and kitchen performance.</p>
+          </button>
+        </div>
+
         {/* Tab Switcher */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-[#EDE5D8]/80 p-1.5 rounded-2xl border border-[#2025221a]">
           <button
-            onClick={() => setActiveTab("customer-login")}
+            onClick={() => {
+              setPortalMode("customer");
+              setActiveTab("customer-login");
+            }}
             className={`flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
               activeTab === "customer-login"
                 ? "bg-[#24483A] text-white shadow-sm"
@@ -142,7 +201,10 @@ export const AuthPage: React.FC = () => {
           </button>
 
           <button
-            onClick={() => setActiveTab("customer-register")}
+            onClick={() => {
+              setPortalMode("customer");
+              setActiveTab("customer-register");
+            }}
             className={`flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
               activeTab === "customer-register"
                 ? "bg-[#24483A] text-white shadow-sm"
@@ -154,10 +216,13 @@ export const AuthPage: React.FC = () => {
           </button>
 
           <button
-            onClick={() => setActiveTab("cook-login")}
+            onClick={() => {
+              setPortalMode("seller");
+              setActiveTab("cook-login");
+            }}
             className={`flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
               activeTab === "cook-login"
-                ? "bg-[#24483A] text-white shadow-sm"
+                ? "bg-[#B86B4B] text-white shadow-sm"
                 : "text-[#6D716C] hover:text-[#202522]"
             }`}
           >
@@ -171,7 +236,10 @@ export const AuthPage: React.FC = () => {
           </a>
 
           <button
-            onClick={() => setCurrentRoute("become-a-cook")}
+            onClick={() => {
+              setPortalMode("seller");
+              setCurrentRoute("become-a-cook");
+            }}
             className="flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-[#B86B4B] text-white hover:bg-[#9E5638] transition-all shadow-xs"
           >
             <Utensils className="w-4 h-4" />
