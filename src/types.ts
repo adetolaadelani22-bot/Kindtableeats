@@ -267,14 +267,8 @@ export type ViewRoute =
   | "seller-menu" 
   | "seller-messages" 
   | "seller-earnings" 
-  | "seller-verification" 
-  | "admin-dashboard" 
-  | "admin-sellers" 
-  | "admin-verifications" 
-  | "admin-orders" 
-  | "admin-food-safety" 
-  | "admin-settings"
+  | "seller-verification"
   | "login"
   | "register";
 
-export type UserRole = "customer" | "seller" | "admin";
+export type UserRole = "customer" | "seller";

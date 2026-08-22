@@ -28,7 +28,7 @@ export const RoleSwitcherBanner: React.FC = () => {
             <button
               onClick={() => {
                 setUserRole("customer");
-                if (currentRoute.startsWith("seller-") || currentRoute.startsWith("admin-")) {
+                if (currentRoute.startsWith("seller-")) {
                   setCurrentRoute("discover");
                 }
               }}

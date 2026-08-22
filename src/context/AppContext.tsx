@@ -260,12 +260,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
       role: "seller" as UserRole
     },
-    admin: {
-      name: "Sarah Sterling",
-      email: "sarah.ops@kindtableeats.org",
-      avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200",
-      role: "admin" as UserRole
-    }
   }[userRole];
 
   const setCurrentRoute = (route: ViewRoute) => {
@@ -462,7 +456,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return newOrder;
   };
 
-  // Update order status (for seller or admin testing)
+  // Update order status for seller testing.
   const updateOrderStatus = (orderId: string, status: OrderStatus) => {
     setOrders((prev) =>
       prev.map((ord) => {
