@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useApp } from "../../context/AppContext";
 import { UserRole, ViewRoute } from "../../types";
 import { Sparkles, User, ChefHat } from "lucide-react";
 
 export const RoleSwitcherBanner: React.FC = () => {
-  const { userRole, setUserRole, setCurrentRoute, currentRoute, orders, applications } = useApp();
+  const { userRole, setUserRole, setCurrentRoute, currentRoute, orders, meals } = useApp();
+  const [typedMeal, setTypedMeal] = useState("");
+  const [mealIndex, setMealIndex] = useState(0);
+
+  const todayMeals = meals.filter((meal) => !meal.isPaused && meal.portionsAvailable > 0).slice(0, 6);
+  const mealNames = todayMeals.length > 0 ? todayMeals.map((meal) => meal.name) : ["Today's home-cooked menu"];
+
+  useEffect(() => {
+    const currentMeal = mealNames[mealIndex % mealNames.length];
+    let characterIndex = 0;
+    setTypedMeal("");
+
+    const typeTimer = window.setInterval(() => {
+      characterIndex += 1;
+      setTypedMeal(currentMeal.slice(0, characterIndex));
+      if (characterIndex >= currentMeal.length) {
+        window.clearInterval(typeTimer);
+      }
+    }, 45);
+
+    const nextMealTimer = window.setTimeout(() => {
+      setMealIndex((index) => (index + 1) % mealNames.length);
+    }, 4200);
+
+    return () => {
+      window.clearInterval(typeTimer);
+      window.clearTimeout(nextMealTimer);
+    };
+  }, [mealIndex, mealNames.join("|")]);
 
   const activeOrdersCount = orders.filter(o => o.status === "cooking" || o.status === "received" || o.status === "accepted" || o.status === "out_for_delivery").length;
 
@@ -17,8 +45,10 @@ export const RoleSwitcherBanner: React.FC = () => {
           <span className="inline-flex items-center gap-1.5 bg-[#C8A96B]/20 text-[#C8A96B] px-2.5 py-0.5 rounded font-semibold text-[11px] uppercase tracking-wider">
             <Sparkles className="w-3 h-3" /> Fresh Today
           </span>
-          <span className="hidden sm:inline text-[#D9D0C1]">
-            Authentic home-cooked meals by local single mothers • 100% of cook tips supported
+          <span className="hidden min-w-0 items-center text-[#D9D0C1] sm:inline-flex" aria-live="polite">
+            <span className="mr-2 shrink-0">Today:</span>
+            <span className="max-w-[34rem] truncate font-medium text-[#F8F5EF]">{typedMeal}</span>
+            <span className="ml-1 animate-pulse text-[#C8A96B]" aria-hidden="true">|</span>
           </span>
         </div>
 
