@@ -15,7 +15,6 @@ export const Navbar: React.FC = () => {
     currentUser,
     setIsAuthModalOpen,
     setAuthMode,
-    notifications,
     searchQuery,
     setSearchQuery,
     currency,
@@ -25,8 +24,6 @@ export const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
-  const unreadNotifs = notifications.filter(n => !n.read).length;
 
   const handleNav = (route: ViewRoute) => {
     setCurrentRoute(route);
@@ -89,21 +86,6 @@ export const Navbar: React.FC = () => {
             >
               Our Cooks
               {(currentRoute === "kitchens" || currentRoute === "kitchen-detail") && (
-                <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#24483A]" />
-              )}
-            </button>
-
-            <button 
-              onClick={() => handleNav("order-tracking")} 
-              className={`transition-colors py-1 relative flex items-center gap-1.5 ${
-                currentRoute === "order-tracking" ? "text-[#24483A]" : "hover:text-[#24483A]"
-              }`}
-            >
-              <span>Track Order</span>
-              {notifications.some(n => !n.read && n.type === "order") && (
-                <span className="w-2 h-2 rounded-full bg-[#B86B4B] animate-ping" />
-              )}
-              {currentRoute === "order-tracking" && (
                 <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#24483A]" />
               )}
             </button>
@@ -330,11 +312,11 @@ export const Navbar: React.FC = () => {
             {/* Shopping Basket Button */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center gap-2 bg-[#24483A] text-white hover:bg-[#193329] px-5 py-2.5 rounded-[8px] text-[12px] font-bold uppercase tracking-wider shadow-xs transition-all active:scale-98"
+              className="relative flex h-10 w-10 items-center justify-center rounded-[8px] bg-[#24483A] text-white shadow-xs transition-all hover:bg-[#193329] active:scale-98"
               aria-label="Open Basket"
+              title="Open basket"
             >
-              <ShoppingBag className="w-3.5 h-3.5" />
-              <span>Basket</span>
+              <ShoppingBag className="h-5 w-5" />
               {cartCount > 0 && (
                 <span className="w-5 h-5 rounded-full bg-[#B86B4B] text-white text-[10px] font-bold flex items-center justify-center -ml-0.5">
                   {cartCount}
