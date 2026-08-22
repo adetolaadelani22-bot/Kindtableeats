@@ -11,6 +11,7 @@ export const AuthModal: React.FC = () => {
     setAuthMode, 
     setUserRole, 
     setIsAuthenticated,
+    setCustomerIdentity,
     setCurrentRoute,
     addToast 
   } = useApp();
@@ -45,6 +46,7 @@ export const AuthModal: React.FC = () => {
     e.preventDefault();
     setUserRole("customer");
     setIsAuthenticated(true);
+    setCustomerIdentity(email.split("@")[0].replace(/[._-]+/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase()), email);
     setIsAuthModalOpen(false);
     addToast({
       title: "Signed In Successfully",

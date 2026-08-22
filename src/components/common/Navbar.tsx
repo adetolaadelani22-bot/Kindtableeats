@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useApp } from "../../context/AppContext";
-import { ShoppingBag, Search, Menu, X, ShieldCheck, ChevronDown, User, Heart, Bell, Globe2, ArrowRight } from "lucide-react";
+import { ShoppingBag, Search, Menu, X, ShieldCheck, ChevronDown, User, Heart, Bell, Globe2, ArrowRight, LogOut } from "lucide-react";
 import { ViewRoute, UserRole, Currency } from "../../types";
 import { GLOBAL_CURRENCIES } from "../../data/mockData";
 
@@ -13,6 +13,7 @@ export const Navbar: React.FC = () => {
     userRole, 
     setUserRole, 
     isAuthenticated,
+    setIsAuthenticated,
     currentUser,
     navigateToMeal,
     setIsAuthModalOpen,
@@ -43,6 +44,14 @@ export const Navbar: React.FC = () => {
       return;
     }
     setIsCartOpen(true);
+  };
+
+  const handleCustomerLogout = () => {
+    setIsAuthenticated(false);
+    setUserRole("customer");
+    setIsCartOpen(false);
+    setIsProfileDropdownOpen(false);
+    setCurrentRoute("home");
   };
 
   return (
@@ -339,6 +348,15 @@ export const Navbar: React.FC = () => {
                     <span>Full Sign In / Register Portal</span>
                     <span>→</span>
                   </button>
+                  {isAuthenticated && userRole === "customer" && (
+                    <button
+                      onClick={handleCustomerLogout}
+                      className="flex w-full items-center justify-between px-4 py-2 text-left text-xs font-semibold text-[#B86B4B] hover:bg-[#F8F5EF]"
+                    >
+                      <span>Log out</span>
+                      <LogOut className="h-3.5 w-3.5" />
+                    </button>
+                  )}
                 </div>
               )}
             </div>
